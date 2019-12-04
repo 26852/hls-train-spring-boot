@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.hls.springbootssmdemo.mapper.UserMapper">
+
+<resultMap id="BaseResult" type="com.hand.hls.springbootssmdemo.entity.User">
+        <id column="user_id" javaType="int" property="userId"></id>
+        <result column="user_name" javaType="String" property="userName"/>
+        <result column="age" javaType="int" property="age"/>
+        <result column="create_time" javaType="java.sql.Date" property="createTime"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResult">
+        SELECT
+            user_id,
+            user_name,
+            age,
+            create_time
+        FROM
+	        user_info
+    </select>
+
+    <select id="getUserById" parameterType="int" resultMap="BaseResult">
+        SELECT
+            user_id,
+            user_name,
+            age,
+            create_time
+        FROM
+            user_info
+        WHERE
+            user_id =#{id}
+    </select>
+
+    <insert id="createUser"
+
+            parameterType="com.hand.hls.springbootssmdemo.entity.User" >
+        INSERT INTO user_info(user_id, user_name, age, create_time)
+        VALUES (#{userId}, #{userName}, #{age}, #{createTime})
+    </insert>
+
+    <update id="updateUser" parameterType="com.hand.hls.springbootssmdemo.entity.User">
+        UPDATE
+        user_info
+        set
+        user_name = #{userName},
+        age= #{age}
+        WHERE user_id= #{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="com.hand.hls.springbootssmdemo.entity.User">
+        DELETE FROM
+        user_info
+        WHERE user_id=#{userId}
+    </delete>
+</mapper>
